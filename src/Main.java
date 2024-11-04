@@ -1,5 +1,3 @@
-import java.util.HashSet;
-
 public class Main {
     public static void main(String[] args) {
         int c3 = 2213 % 3;

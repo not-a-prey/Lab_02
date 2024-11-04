@@ -78,7 +78,7 @@ public class StringBufferMethod {
                 }
             }
             if ((wordBuffer.length() - nonLetterChars) == wordLenght){
-                matchingWords.add((wordBuffer.toString()).substring(0, wordLenght));
+                matchingWords.add(wordBuffer.toString().substring(0, wordLenght));
             }
         }
         return matchingWords;
