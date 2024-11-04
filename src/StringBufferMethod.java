@@ -10,22 +10,35 @@ public class StringBufferMethod {
     }
 
 
-    public HashSet<String> getAllWords(){
-        HashSet<String> foundWords = new HashSet<>();
+    public String getAllWords(){
+        try {
+            HashSet<String> foundWords = new HashSet<>();
 
-        while (sb.length() > 0){
             StringBuffer sentence = getNextSentence();
-            if (sentence.length() == 0){
-                break;
-            }
-            if (sentence.charAt(sentence.length() - 1) == '?'){
-                HashSet<String> matchingWords = getWordsWithGivenLengthInSentence(sentence);
-                foundWords.addAll(matchingWords);
+            if (sentence == null) {
+                throw new NullPointerException("У заданому тексті речення відсутні.");
             }
 
-            deleteSentence(sentence);
+            while (sb.length() > 0) {
+                if (sentence.length() == 0) {
+                    break;
+                }
+                if (sentence.charAt(sentence.length() - 1) == '?') {
+                    HashSet<String> matchingWords = getWordsWithGivenLengthInSentence(sentence);
+                    foundWords.addAll(matchingWords);
+                }
+                //sentenceCount++;
+                deleteSentence(sentence);
+                sentence = getNextSentence();
+            }
+            return "Знайдені слова довжиною " + wordLenght + " літер: " + foundWords;
         }
-        return foundWords;
+        catch (NullPointerException e) {
+            return e.getMessage();
+        }
+        catch (Exception e) {
+            return "Несподівана помикла: " + e.getMessage();
+        }
     }
 
     public int findSentenceEnd(){
@@ -64,12 +77,10 @@ public class StringBufferMethod {
                     nonLetterChars += 1;
                 }
             }
-            if (wordBuffer.length() == wordLenght && nonLetterChars == 0){
-                matchingWords.add(wordBuffer.toString());
+            if ((wordBuffer.length() - nonLetterChars) == wordLenght){
+                matchingWords.add((wordBuffer.toString()).substring(0, wordLenght));
             }
         }
         return matchingWords;
     }
-
-
 }
